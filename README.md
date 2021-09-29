@@ -1,2 +1,2 @@
-# Sudoku-Solver
-Graphic User Interface for solving Sudoku
+# Sudoku
+GUI for playing and solving sudoku
