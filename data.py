@@ -14,6 +14,7 @@ board_manager.load()
 
 large_font = pygame.font.Font('freesansbold.ttf', 20)
 small_font = pygame.font.Font('freesansbold.ttf', 14)
+little_font = pygame.font.Font('freesansbold.ttf', 7)
 
 back_image_1 = Image('back_1.jpg')
 back_image_1.y = SCREEN_HEIGHT - back_image_1.height
@@ -26,6 +27,20 @@ tick_image_1.y = SCREEN_HEIGHT - tick_image_1.height
 tick_image_2 = Image('tick_1.jpg')
 tick_image_2.x = tick_image_1.x
 tick_image_2.y = tick_image_1.y
+
+thrash_image_1 = Image('thrash_1.png')
+thrash_image_1.x = SCREEN_WIDTH // 2 - thrash_image_1.width // 2
+thrash_image_1.y = SCREEN_HEIGHT - thrash_image_1.height
+thrash_image_2 = Image('thrash_2.png')
+thrash_image_2.x = thrash_image_1.x
+thrash_image_2.y = thrash_image_1.y
+
+backtracking_image_1 = Image('backtracking_1.png')
+backtracking_image_1.x = SCREEN_WIDTH // 2 - backtracking_image_1.width // 2
+backtracking_image_1.y = SCREEN_HEIGHT - backtracking_image_1.height
+backtracking_image_2 = Image('backtracking_2.png')
+backtracking_image_2.x = backtracking_image_1.x
+backtracking_image_2.y = backtracking_image_1.y
 
 index_11 = Image('Index_11.png')
 index_11.y = (50 * SCREEN_HEIGHT) // 100

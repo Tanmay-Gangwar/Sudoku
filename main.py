@@ -1,7 +1,6 @@
 import pygame
 import create
 import front_screen
-import board
 import games
 from data import *
 pygame.init()

@@ -3,12 +3,15 @@ import time
 import pickle
 from data import *
 
+show_backtracking = False
+
 def draw_rect(screen, row, col, color):
     col_factor = 2 if col == 0 or col == 3 or col == 6 else 1
     row_factor = 2 if row == 0 or row == 3 or row == 6 else 1
     pygame.draw.rect(screen, color, (col * BOX_WIDTH + col_factor, row * BOX_WIDTH + row_factor, BOX_WIDTH - col_factor, BOX_WIDTH - row_factor))
 
 def display_screen(screen, board, row, col, x, y, click):
+    global show_backtracking
     screen.fill((255, 255, 255))
     draw_rect(screen, row, col, (255, 255, 0))
     for i in range(9):
@@ -29,6 +32,14 @@ def display_screen(screen, board, row, col, x, y, click):
                 text = str(board.board[i][j][0])
                 text = large_font.render(text, True, (0, 0, 0))
                 screen.blit(text, (j * BOX_WIDTH + BOX_WIDTH // 2 - text.get_width() // 2, i * BOX_WIDTH + BOX_WIDTH // 2 - text.get_height() // 2))
+    if backtracking_image_1.x <= x <= backtracking_image_1.x + backtracking_image_1.width and backtracking_image_1.y <= y <= backtracking_image_1.y + backtracking_image_1.height:
+        if click:
+            show_backtracking = not show_backtracking
+            time.sleep(0.1)
+
+    if show_backtracking: screen.blit(backtracking_image_1.image, (backtracking_image_1.x, backtracking_image_1.y))
+    else: screen.blit(backtracking_image_2.image, (backtracking_image_2.x, backtracking_image_2.y))
+    
     if back_image_1.x <= x <= back_image_1.x + back_image_1.width and back_image_1.y <= y <= back_image_1.y + back_image_1.height:
         screen.blit(back_image_2.image, (back_image_2.x, back_image_2.y))
         if click:
@@ -37,40 +48,24 @@ def display_screen(screen, board, row, col, x, y, click):
     if tick_image_1.x <= x <= tick_image_1.x + tick_image_1.width and tick_image_1.y <= y <= tick_image_1.y + tick_image_1.height:
         screen.blit(tick_image_2.image, (tick_image_2.x, tick_image_2.y))
         if click:
-            # board.solve(screen)
-            invalids = []
-            for i in range(9):
-                for j in range(9):
-                    if board.board[i][j][0] != 0 and not board.is_valid(board.board[i][j][0], i, j):
-                        invalids.append((i, j))
-            if len(invalids) == 0:
-                board_manager.boards.append(board)
-                board_manager.save()
-                return 1
-            else:
-                for r, c in invalids:
-                    draw_rect(screen, r, c, (255, 255, 255))
-                pygame.display.update()
-                time.sleep(0.5)
-                for r, c in invalids:
-                    draw_rect(screen, r, c, (255, 0, 0))
+            board.solve(screen, show_backtracking)
     else: screen.blit(tick_image_1.image, (tick_image_1.x, tick_image_1.y))
 
     pygame.display.update()
 
-def main(screen):
+def main(screen, board):
     row = 0
     col = 0
     x = 0
     y = 0
     click = False
-    board = Board()
     while True:
         to_return = display_screen(screen, board, row, col, x, y, click)
         if to_return: return to_return
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return 0
+                pygame.quit()
+                exit()
             if event.type == pygame.MOUSEMOTION:
                 x, y = event.pos
                 row = min(y // BOX_WIDTH, 8)

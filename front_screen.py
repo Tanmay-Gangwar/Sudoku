@@ -11,7 +11,7 @@ def display_screen(screen, x, y, click) -> None:
     else: screen.blit(index_11.image, (index_11.x, index_11.y))
     if index_21.x <= x <= index_21.x + index_21.width and index_21.y <= y <= index_21.y + index_21.height: 
         screen.blit(index_22.image, (index_22.x, index_22.y))
-        if click: return 1
+        if click: return 3
     else: screen.blit(index_21.image, (index_21.x, index_21.y))
     pygame.display.update()
 
